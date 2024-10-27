@@ -1,0 +1,20 @@
+extends ../../layouts/default.pug
+
+block main 
+    h1(class="mb-4") Chi tiết sản phẩm 
+    if(product.title)
+        div(class="mb-4") Tên sản phẩm: <b>#{product.title}</b>
+    
+    if(product.price)
+        div(class="mb-4") Giá: <b>#{product.price}$</b>
+    if(product.discountPercentage)
+        div(class="mb-4") Giảm Giá:  <b>#{product.discountPercentage}%</b>
+    if(product.stock)
+        div(class="mb-4") Số lượng: <b>#{product.stock}</b>
+    if(product.thumbnail)
+        img(src=product.thumbnail 
+        style="width: 150px")
+    if(product.description)
+        div(class="mb-4") Mô tả: <b>#{product.description}</b>
+
+    script(src="/admin/js/product.js") 
