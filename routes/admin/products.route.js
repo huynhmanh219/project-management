@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
+
 const multer = require('multer');//import de su dung luu hinh anh
-const storemulter = require('../../helper/storageMulter');
-const upload = multer({storage: storemulter()})
-const validate = require("../../validates/admin/product.validate")
-const controller = require("../../controller/admin/product.controller")
+
+// const storemulter = require('../../helper/storageMulter');
+const upload = multer();        //{storage: storemulter()} đoạn code cấu hình lưu ảnh vào file upload
+//config cloudinary
+const uploadcloud = require("../../middlewares/admin/uploadCloud.middleware");
+const validate = require("../../validates/admin/product.validate");
+const controller = require("../../controller/admin/product.controller");
 
 router.get('/',controller.index);
 router.patch('/change-status/:status/:id',controller.changeStatus);
@@ -17,6 +21,7 @@ router.get('/create',controller.create);
 
 router.post('/create',
     upload.single("thumbnail"),
+    uploadcloud.upload,
     validate.createPost,
     controller.createPost)
 
@@ -29,4 +34,5 @@ router.patch('/edit/:id',
     upload.single("thumbnail"),
     validate.createPost,
     controller.editPatch);
+
 module.exports = router
