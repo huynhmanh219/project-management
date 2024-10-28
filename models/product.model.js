@@ -1,4 +1,5 @@
 const mongoose  = require("mongoose");
+
 const slug = require('mongoose-slug-updater'); // import de lay slug tren thanh url ung voi title
 mongoose.plugin(slug);
 

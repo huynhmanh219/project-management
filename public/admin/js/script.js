@@ -109,8 +109,8 @@ const formChangemulti = document.querySelector("[form-change-multi]");
             const inputChecked = checkboxmulti.querySelectorAll("input[name='id']:checked");
             
             const typechange = e.target.elements.type.value; // lấy giá trị xóa tất cả;
-           
-            if(typechange== "delete-all")
+            console.log(typechange);
+            if(typechange == "delete-all")
             { 
                 const isConfirm = confirm("Bạn có muốn xóa sản phẩm không ?");
                 if(!isConfirm)
@@ -125,9 +125,9 @@ const formChangemulti = document.querySelector("[form-change-multi]");
                 
                 inputChecked.forEach(input =>{
                     let id = input.value// hooac input.gettribute("")
-                    if(typechange== "change-position")
+                    if(typechange == "change-position")
                     {
-                        const inputPosition = input.closest("tr").querySelector("input[name='position'").value;
+                        const inputPosition = input.closest("tr").querySelector("input[name='position']").value;
                         ids.push(`${id}-${inputPosition}`);
                     }
                     else
@@ -151,7 +151,7 @@ const showAlert = document.querySelector("[show-alert]");
 
 const idshow = document.getElementById("show");
 const idx = document.getElementById("idx");
-console.log(idx);
+
 
 if(showAlert)
 {
@@ -182,6 +182,7 @@ if(uploadImage)
         uploadImagePreview.src="";
     })
     //end delete image
+
     const uploadImageInput =  document.querySelector("[upload-image-input]");
     const uploadImagePreview =  document.querySelector("[upload-image-preview]");
     console.log(uploadImageInput);
@@ -197,4 +198,43 @@ if(uploadImage)
 }
 //end upload image
 
+//sort
+const sort = document.querySelector('[sort]');
+if(sort)
+{
+    const url = new URL(window.location.href);
+    const sortSelect = sort.querySelector('[sort-select]');
+    const sortButton = sort.querySelector('[sort-clear]');
 
+    //sắp xếp
+    sortSelect.addEventListener("change",(e)=>{
+        const value = e.target.value;
+        const [sortKey,sortValue] = value.split("-");
+        console.log(sortKey,sortValue);
+        
+        url.searchParams.set("sortKey",sortKey);
+        url.searchParams.set("sortValue",sortValue);
+
+        window.location.href = url.href;   
+    })
+    //end sắp xếp
+
+    //xoá sắp xếp
+    sortButton.addEventListener("click",()=>{
+        url.searchParams.delete("sortKey");
+        url.searchParams.delete("sortValue");
+
+        window.location.href = url.href;   
+    });
+     //xoá end sắp xếp
+    const sortKey = url.searchParams.get("sortKey");
+    const sortValue = url.searchParams.get("sortValue");
+    if(sortKey && sortValue)
+    {
+        const stringSort = `${sortKey}-${sortValue}`;
+        const optionSelected = sortSelect.querySelector(`option[value=${stringSort}]`);
+        console.log(optionSelected);
+        optionSelected.selected= true;
+    }
+}
+//end sort

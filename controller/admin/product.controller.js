@@ -34,11 +34,25 @@ module.exports.index = async (req,res)=>{
      req.query, 
      countProduct
     );
+    //end tính năng phân trang
+    //sort
+    const sort ={};
+    if(req.query.sortKey && req.query.sortValue)
+    {
+        sort[req.query.sortKey] = req.query.sortValue;
+    }
+    else{
+        sort.position = "desc";
+    }
+    //end sort
+
+
+    
     const products = await Product
-                    .find(find)
-                    .limit(objectPagination.limitItems)
-                    .skip( objectPagination.skip)
-                    .sort({position:"desc"})
+    .find(find)
+    .limit(objectPagination.limitItems)
+    .skip( objectPagination.skip)
+    .sort(sort)
 
                     
     res.render("admin/pages/products/index",{
@@ -122,10 +136,11 @@ module.exports.create = async(req,res)=>{
 //[POST]/admin/products/create
 module.exports.createPost = async(req,res)=>{
     console.log(req.file);
+    console.log(req.body[req.file.fieldname]);
     req.body.price = parseInt(req.body.price);
     req.body.stock = parseInt(req.body.stock);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
-
+    
     if(req.body.position == "")
     {
         const countProducts =  await Product.countDocuments();
@@ -145,7 +160,7 @@ module.exports.createPost = async(req,res)=>{
     // }
     const product = new Product(req.body);
     console.log(req.body)
-    await product.save();
+    // await product.save();
 
     res.redirect(`${systemConfig.prefixAdmin}/products`)
 }

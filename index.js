@@ -2,7 +2,8 @@ const express= require('express');
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT;
-
+const path = require("path");
+const favicon = require('serve-favicon');
 const routerAdmin = require("./routes/admin/index.route")
 const router = require("./routes/client/index.route");
 const flash = require("express-flash") // import thư viện dùng để hiển thị thông báo
@@ -15,6 +16,8 @@ const bodyParser = require('body-parser') //import body-parser
 
 
 database.connet();
+
+app.use(favicon(path.join(__dirname, 'public', 'uploads', 'favicon.ico')));
 
 app.set("view engine","pug");
 app.set("views",`${__dirname}/views`)

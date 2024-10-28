@@ -7,14 +7,14 @@ if( buttonChangeStatus.length>0 )
     const pathStatus = formChangeStatus.getAttribute("data-path");
     buttonChangeStatus.forEach(button=>{
         button.addEventListener("click",()=>{
-
             const statusCurrent = button.getAttribute("data-status");
             const id = button.getAttribute("data-id");
-            let statusChange = statusCurrent == "active" ? "inactive" : "active";
+            let statusChange = (statusCurrent == "active" ? "inactive" : "active");
             
             const action = pathStatus + `/${statusChange}/${id}?_method=PATCH`;
             formChangeStatus.action = action
             formChangeStatus.submit();
+            fri
         })
     })
 }
@@ -40,5 +40,4 @@ if(buttonDelete.length>0){
     })
 
 }
-
 // end delete product
