@@ -160,7 +160,7 @@ module.exports.createPost = async(req,res)=>{
     // }
     const product = new Product(req.body);
     console.log(req.body)
-    // await product.save();
+    await product.save();
 
     res.redirect(`${systemConfig.prefixAdmin}/products`)
 }

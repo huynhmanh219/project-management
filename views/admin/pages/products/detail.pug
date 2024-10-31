@@ -14,7 +14,9 @@ block main
     if(product.createdAt)
         div(class="mb-4") Ngày tạo: <b>#{Date(product.createdAt)}</b>
     if(product.thumbnail)
-        img(src=product.thumbnail style="100px")
+        img(src=product.thumbnail style="width:100px")
+    if(product.description)
+        div(class="mb-4") Mô tả: <b>!{product.description}</b>
     if(product.position)
         div(class="mb-4") Vị trí: <b>#{product.position}</b>
     

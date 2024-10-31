@@ -2,7 +2,7 @@ const express= require('express');
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT;
-const path = require("path");
+const path = require("path");// lấy đường dẫn
 const favicon = require('serve-favicon');
 const routerAdmin = require("./routes/admin/index.route")
 const router = require("./routes/client/index.route");
@@ -33,6 +33,9 @@ app.use(cookieParser("werhwerhsdfh"));
 app.use(session({cookie:{maxAge:60000}}));
 app.use(flash());
 //end flash
+
+//tiny MCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // parse application/x-www-form-urlencode
 app.use(bodyParser.urlencoded({extended:true})); 

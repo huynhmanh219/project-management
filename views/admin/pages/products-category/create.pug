@@ -5,7 +5,7 @@ block main
     
     +alert-error(5000)
     h1(class="mb-4") #{pageTitle}
-    form(action=`${prefixAdmin}/products/create`
+    form(action=`${prefixAdmin}/products-category/create`
       method="POST"
       id="form-create-product"
       enctype="multipart/form-data"
@@ -15,27 +15,14 @@ block main
             label(for="title") Tiêu Đề:
             input(class="form-control" type="text" id="title" name="title" )
         div(class="form-group")
+            label(for="parent_id") Danh mục cha:
+            input(class="form-control" type="text" id="parent_id" name="parent_id" )
+        div(class="form-group")
             label(for="description") Mô tả:
             textarea(class="form-control textarea-mce" 
                 id="description" 
                 rows="5" 
                 name="description")
-        //- div(class="form-group")
-        //-     label(for="description") Nội dung
-        //-     textarea(class="form-control textarea-mce" 
-        //-         id="content" 
-        //-         rows="5" 
-        //-         name="content" )
-
-        div(class="form-group")
-            label(for="price") Giá:
-            input(class="form-control" type="number" id="price" value="0" min="0" name="price" )
-        div(class="form-group")
-            label(for="discountPercentage") Giảm giá:
-            input(class="form-control" type="number" id="discountPercentage" value="0" min="0" name="discountPercentage" )
-        div(class="form-group")
-            label(for="stock") Số Lượng:
-            input(class="form-control" type="number" id="stock" value="0" min="0" name="stock" required) 
         div(class="form-group" upload-image) 
             label(for="thumbnail") Ảnh:
             input(type="file" 
