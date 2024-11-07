@@ -77,4 +77,17 @@ module.exports.permissions = async(req,res)=>{
     })
 }
 
- 
+//[Patch] admin/roles/permissions
+module.exports.permissionsPatch = async(req,res)=>{
+    try{const permissions = JSON.parse(req.body.permissions);
+    for (const item of permissions) {
+        await Role.updateMany({_id:item.id},{permission:item.permissions});
+    }
+    req.flash("success","cập nhật phân quyền thành công");   
+}
+    catch(error)
+    {
+        req.flash("error","Cập nhật quyền thất bại");
+    }
+res.redirect("back");
+}
