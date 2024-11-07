@@ -28,8 +28,7 @@ block main
             div() Trạng thái:
                 a(class="badge badge-success text-white") Hoạt động
     
-    if(product.description)
-        div(class="mb-4") Mô tả: <b>#{product.description}</b>
+
     a(class="btn btn-warning" 
     href=`${prefixAdmin}/products/edit/${product.id}`
     ) Chỉnh sửa

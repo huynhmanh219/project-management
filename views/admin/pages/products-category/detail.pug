@@ -1,0 +1,28 @@
+extends ../../layouts/default.pug
+
+block main 
+    h1(class="mb-4") Chi tiết Danh mục
+    if(data.title)
+        div(class="mb-4") Tên sản phẩm: <b>#{data.title}</b>
+    
+    if(data.thumbnail)
+        img(src=data.thumbnail style="width:100px")
+    if(data.description)
+        div(class="mb-4") Mô tả: <b>!{data.description}</b>
+    if(data.position)
+        div(class="mb-4") Vị trí: <b>#{data.position}</b>
+    
+    if(data.status) 
+        if(data.status == "inactive")
+            div() Trạng thái:
+                a(class="badge badge-danger text-white")  Dừng hoạt động
+        else
+            div() Trạng thái:
+                a(class="badge badge-success text-white") Hoạt động
+    
+
+    a(class="btn btn-warning" 
+    href=`${prefixAdmin}/products-category/edit/${data.id}`
+    ) Chỉnh sửa
+
+    script(src="/admin/js/product.js") 

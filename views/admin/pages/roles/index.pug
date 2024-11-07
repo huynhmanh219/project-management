@@ -1,0 +1,54 @@
+extends ../../layouts/default.pug
+
+block main 
+    
+
+    h1 Nhóm Quyền
+    //-  button-status là thuộc tính tự định nghĩa đặt thế nào cũng được
+    .card.mb-3 
+     .card-header Danh sách 
+      .card-body 
+        .row
+            .col-8
+           
+            .col-4
+             a(
+                href=`${prefixAdmin}/roles/create`
+                class="btn btn-outline-success"
+             ) +Thêm mới
+        table(class=" table table-hover table-sm"
+                checkbox-multi
+            ) 
+            thead 
+                tr 
+                    th STT
+                    th Nhóm Quyền
+                    th Mô Tả Ngắn
+                    th Hành Động
+            tbody 
+                if(records.length > 0)
+                each item,index in records 
+                    tr 
+                        td #{index + 1}
+                        td #{item.title}
+                        td !{item.description}
+                        td  
+                            a(href=`${prefixAdmin}/roles/edit/${item.id}` 
+                            class="btn btn-warning btn-sm")  Sửa
+                            a(href=`${prefixAdmin}/roles/detail/${item.id}`
+                                class="btn btn-primary btn-sm ml-1 text-white") Chi tiết
+                            button(
+                                class="btn btn-danger btn-sm ml-1"
+                                button-delete
+                                data-id=item.id
+                            ) Xoá
+                else 
+                    td(colspan="4" class="text-center") Chưa có nhóm quyền nào được tạo
+    
+        form(action=""
+         method="POST"
+        id="form-delete-item"
+        path= `${prefixAdmin}/roles/delete`
+        ) 
+
+    script(src="/admin/js/role.js")   

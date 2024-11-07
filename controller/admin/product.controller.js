@@ -4,6 +4,8 @@ const searchHelper = require("../../helper/search")
 const paginationHelper = require("../../helper/pagination")
 const validate = require("../../validates/admin/product.validate");
 const systemConfig = require("../../config/system")
+const createTreeHelper = require("../../helper/createTree");
+const ProductCategory = require("../../models/product-category.model");
 
 
 //[GET] /admin/products
@@ -116,7 +118,7 @@ module.exports.changeMulti = async (req,res)=>{
     res.redirect("back");
 }
 
-//[DELETE]/admin/products/delete/:id xoá vĩnh viễn `
+//[DELETE]/admin/products/delete/:id 
 module.exports.deleteItem =  async (req,res)=>{
     const id = req.params.id;
 
@@ -128,8 +130,15 @@ module.exports.deleteItem =  async (req,res)=>{
 
 //[GET]/admin/products/create
 module.exports.create = async(req,res)=>{
+    let find = {
+        deleted: false
+    }
+    const category = await ProductCategory.find(find);
+    const newCategory = createTreeHelper.tree(category);
+
     res.render("admin/pages/products/create",{
-        pageTitle:"Thêm mới sản phẩm"
+        pageTitle:"Thêm mới sản phẩm",
+        category:newCategory
     })
 }
 
@@ -177,9 +186,15 @@ module.exports.edit = async(req,res)=>{
     const product= await Product.findOne(find);
     console.log(product);
     
+    const category = await ProductCategory.find({
+        deleted: false
+    });
+    const newCategory = createTreeHelper.tree(category);
+
     res.render("admin/pages/products/edit",{
         pageTitle:"Sửa sản phẩm",
-        product: product
+        product: product,
+        category:newCategory
     })
 }
     catch(err)
@@ -199,10 +214,10 @@ module.exports.editPatch = async(req,res)=>{
     req.body.discountPercentage = parseFloat(req.body.discountPercentage);
     req.body.position = parseInt(req.body.position);
 
-    if(req.file)
-    {
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
-    } 
+    // if(req.file)
+    // {
+    //     req.body.thumbnail = `/uploads/${req.file.filename}`;
+    // } 
     try
     {
         await Product.updateOne({ _id: id},req.body);

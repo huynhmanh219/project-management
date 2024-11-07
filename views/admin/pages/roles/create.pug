@@ -1,0 +1,25 @@
+extends ../../layouts/default.pug
+
+block main
+
+    h1(class="mb-4") #{pageTitle}
+    form(action=`${prefixAdmin}/roles/create`
+      method="POST"
+      )
+        div(class="form-group")
+            label(for="title") Tiêu Đề:
+            input(class="form-control" 
+            type="text" 
+            id="title" 
+            name="title" )
+        
+        div(class="form-group")
+            label(for="description") Mô tả:
+            textarea(class="form-control textarea-mce" 
+                id="description" 
+                rows="5" 
+                name="description")
+        div(class="form-group")
+            button.btn.btn-primary(type="submit") Tạo mới 
+    
+   

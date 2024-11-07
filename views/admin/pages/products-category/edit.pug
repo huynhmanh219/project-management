@@ -4,16 +4,20 @@ include ../../mixins/select-tree.pug
 block main
     
     +alert-error(5000)
+    +alert-success(5000)
     h1(class="mb-4") #{pageTitle}
-    form(action=`${prefixAdmin}/products-category/create`
+    form(action=`${prefixAdmin}/products-category/edit/${data.id}?_method=PATCH`
       method="POST"
-      id="form-create-product"
       enctype="multipart/form-data"
-      form-create
       )
         div(class="form-group")
             label(for="title") Tiêu Đề:
-            input(class="form-control" type="text" id="title" name="title" )
+            input(class="form-control" 
+            type="text" 
+            id="title" 
+            name="title"
+            value=data.title)
+
         div(class="form-group")
             label(for="parent_id") Danh mục cha:
             //- input(class="form-control" type="text" id="parent_id" name="parent_id" )
@@ -24,14 +28,16 @@ block main
                     ) 
                 option(value="") ---Chọn danh mục cha---
                 if(records)
-                    +select-tree(records)
+                    +select-tree(records,1,data.parent_id)
         
         div(class="form-group")
             label(for="description") Mô tả:
             textarea(class="form-control textarea-mce" 
                 id="description" 
                 rows="5" 
-                name="description")
+                name="description"
+                ) #{data.description}
+
         div(class="form-group" upload-image) 
             label(for="thumbnail") Ảnh:
             input(type="file" 
@@ -40,20 +46,20 @@ block main
                 accept="image/*" 
                 class="form-control-file"           
                 upload-image-input)
-            img(src="" class="image-preview" upload-image-preview)
+            img(src=data.thumbnail class="image-preview" upload-image-preview)
         div(class="form-group")
             button(class="btn btn-danger" button-delete) Xoá ảnh
             
         div(class="form-group")
             label(for="position") Vị trí:
-            input(class="form-control" type="number" placeholder="tự động tăng" id="position" name="position" )
+            input(class="form-control" type="number" placeholder="tự động tăng" id="position" name="position" value=data.position)
         div(class="form-group form-check form-check-inline")
-            input(class="form-check-input" type="radio" id="statusActive" name="status" value="active" checked)
+            input(class="form-check-input" type="radio" id="statusActive" name="status" value="active" checked=(data.status == "active" ? true : false))
             label.form-check-label(for="statusActive") Hoạt Động
-            input(class="form-check-input" type="radio" id="statusInActive" name="status" value="inactive")
+            input(class="form-check-input" type="radio" id="statusInActive" name="status" value="inactive" checked=(data.status == "inactive" ? true : false))
             label.form-check-label(for="statusInActive") Dừng Hoạt Động
         
         div(class="form-group")
-            button.btn.btn-primary(type="submit") Tạo mới sản phẩm
+            button.btn.btn-primary(type="submit") Chỉnh sửa sản phẩm
     
    

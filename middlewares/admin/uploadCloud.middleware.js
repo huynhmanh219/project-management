@@ -9,7 +9,6 @@ cloudinary.config({
 });
 //end config cloudinary
 
-
 module.exports.upload = (req,res,next)=>{
     if(req.file){
     let streamUpload = (req)=>{
@@ -38,5 +37,4 @@ module.exports.upload = (req,res,next)=>{
     {
         next();
     }
-    
 }
