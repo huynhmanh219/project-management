@@ -7,7 +7,6 @@ module.exports.index = async(req,res)=>{
         deleted:false
     }
     const records = await Role.find(find);
-    console.log(records);
     res.render("admin/pages/roles/index",{
         pageTitle:"Nhóm quyền",
         records:records
@@ -70,7 +69,7 @@ module.exports.permissions = async(req,res)=>{
         deleted:false,
     }
     const records = await Role.find(find);
-    console.log(records);
+
     res.render("admin/pages/roles/permissions",{
         pageTitle:"Phân quyền",
         records:records
