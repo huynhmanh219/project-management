@@ -19,7 +19,7 @@ const accountSchema = new mongoose.Schema({
     deletedAt:Date
 },
 {
-    Timestamp:true
+    timestamp:true
 })
 
 const Account = mongoose.model("Account",accountSchema,"accounts");
