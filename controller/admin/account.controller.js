@@ -58,5 +58,50 @@ module.exports.createPost = async (req,res) =>{
 
 //[GET] admin/account/edit/id
 module.exports.edit = async(req,res)=>{
+    let find = {
+        _id:req.params.id,
+        deleted:false 
+    }
+    const data = await Account.findOne(find);
+    const roles = await Role.find({deleted:false});
     
+    try{
+        res.render("admin/pages/accounts/edit",{
+            pageTitle:"Cập nhật tài khoản",
+            data: data,
+            roles:roles
+        } 
+    );}
+    catch(error)
+    {
+        res.redirect(`${systemConfig.prefixAdmin}/accounts`);
+    }
+}
+
+//[patch] admin/account/edit/id
+module.exports.editPatch = async(req,res)=>{
+    const id = req.params.id;
+    const emailExist = await Account.findOne({
+        _id:{$ne:id},// $ne =  not equal (những id không bằng id này)
+        deleted:false,
+        email:req.body.email
+    })
+   
+    if(emailExist)
+    {
+        req.flash("error",`Email ${req.body.email} đã tồn tại !!!!`);
+    }
+    else{ 
+
+        if(req.body.password) 
+        {
+            req.body.password = md5(req.body.password);
+        }
+        else{
+            delete req.body.password; //xoá thuộc tính delete khi mà người dùng k muốn sửa lại password trong object(req.body)
+        }
+        await Account.updateOne({_id: id},req.body);  
+        req.flash("success","Cập nhật tài khoản thành công");
+    }
+    res.redirect('back');
 }

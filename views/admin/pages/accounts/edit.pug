@@ -5,32 +5,35 @@ include ../../mixins/select-tree.pug
 block main
     
     +alert-error(5000)
+    +alert-success(3000)
     h1(class="mb-4") #{pageTitle}
-    form(action=`${prefixAdmin}/accounts/create`
+    form(action=`${prefixAdmin}/accounts/edit/${data.id}?_method=PATCH`
       method="POST"
-      id="form-create-accounts"
-      form-create
+      enctype = "multipart/form-data"
       )
         div(class="form-group")
             label(for="fullname") Họ Tên:
             input(class="form-control" 
                 id="fullname" 
-                name="fullname")
+                name="fullname"
+                value=data.fullname
+                )
            
         div(class="form-group")
             label(for="email") Email:
-            input(class="form-control" type="text" id="email" name="email" )
+            input(class="form-control" type="text" id="email" name="email" value=data.email)
         
         div(class="form-group")
             label(for="password") Mật Khẩu:
             input(class="form-control" 
             type="password"
             id="password"
-            name="password")
+            name="password"
+            )
 
         div(class="form-group")
             label(for="phone") Số Điện Thoại:
-            input(class="form-control" type="text" id="phone" name="phone") 
+            input(class="form-control" type="text" id="phone" name="phone" value=data.phone) 
         
         div(class="form-group" upload-image) 
             label(for="avatar") Avatar:
@@ -40,32 +43,45 @@ block main
                 accept="image/*" 
                 class="form-control-file"           
                 upload-image-input)
-            img(src="" class="image-preview" upload-image-preview)
+            img(
+            src=data.avatar 
+            class="image-preview" 
+            upload-image-preview)
+        
         div(class="form-group")
             button(class="btn btn-danger" button-delete) Xoá ảnh
             
         div(class="form-group")
             label(for="role_id") Phân Quyền
-            select(name="role_id"
+            select(
+                name="role_id"
                 id="role_id"
                 class="form-control"
                 )
-                option(value="") ---Chọn Danh Mục
+                option(disabled) ---Chọn---
+                each item in roles
+                    option(
+                        value=item.id 
+                        selected=(item.id == data.role_id ? true : false)
+                    ) #{item.title}
+
         div(class="form-group form-check form-check-inline")
             input(class="form-check-input"
              type="radio" id="statusActive" 
-             name="status" value="active" 
-             checked)
+             name="status" value="active" checked=(data.status == "active" ?true:false )
+            )
 
             label.form-check-label(for="statusActive") Hoạt Động
             input(class="form-check-input"
              type="radio" 
              id="statusInActive"
              name="status" 
-             value="inactive")
+             checked=(data.status == "inactive" ?true:false )
+             value="inactive"
+             )
             label.form-check-label(for="statusInActive") Dừng Hoạt Động
         
         div(class="form-group")
-            button.btn.btn-primary(type="submit") Tạo mới tài khoản
+            button.btn.btn-primary(type="submit") Cập nhật tài khoản
     
    

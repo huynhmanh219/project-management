@@ -9,7 +9,7 @@ block main
     form(action=`${prefixAdmin}/accounts/create`
       method="POST"
       id="form-create-accounts"
-      form-create
+    enctype = "multipart/form-data"
       )
         div(class="form-group")
             label(for="fullname") Họ Tên:
