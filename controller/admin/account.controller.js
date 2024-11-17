@@ -58,8 +58,8 @@ module.exports.createPost = async (req,res) =>{
 
 //[GET] admin/account/edit/id
 module.exports.edit = async(req,res)=>{
-    let find = {
-        _id:req.params.id,
+    const find = {
+        _id: req.params.id,
         deleted:false 
     }
     const data = await Account.findOne(find);
