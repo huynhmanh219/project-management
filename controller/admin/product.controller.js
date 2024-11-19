@@ -6,7 +6,7 @@ const validate = require("../../validates/admin/product.validate");
 const systemConfig = require("../../config/system")
 const createTreeHelper = require("../../helper/createTree");
 const ProductCategory = require("../../models/product-category.model");
-
+const Account = require("../../models/account.model");
 
 //[GET] /admin/products
 module.exports.index = async (req,res)=>{
@@ -56,7 +56,16 @@ module.exports.index = async (req,res)=>{
     .skip( objectPagination.skip)
     .sort(sort)
 
-                    
+    for (const product of products) {
+        const user = await Account.findOne({
+            _id:product.createdBy.account_id
+        })
+        if(user)
+        {
+            product.accountfullname = user.fullname;
+        }   
+    };
+  
     res.render("admin/pages/products/index",{
         pageTitle:"Danh sách sản phẩm",
         products:products,
@@ -131,10 +140,13 @@ module.exports.deleteItem =  async (req,res)=>{
 //[GET]/admin/products/create
 module.exports.create = async(req,res)=>{
     let find = {
-        deleted: false
+        deleted: false,
     }
+    console.log(res.locals.user);
     const category = await ProductCategory.find(find);
     const newCategory = createTreeHelper.tree(category);
+
+
 
     res.render("admin/pages/products/create",{
         pageTitle:"Thêm mới sản phẩm",
@@ -144,8 +156,7 @@ module.exports.create = async(req,res)=>{
 
 //[POST]/admin/products/create
 module.exports.createPost = async(req,res)=>{
-    console.log(req.file);
-    console.log(req.body[req.file.fieldname]);
+
     req.body.price = parseInt(req.body.price);
     req.body.stock = parseInt(req.body.stock);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
@@ -167,6 +178,10 @@ module.exports.createPost = async(req,res)=>{
     // {
     // req.body.thumbnail = `/uploads/${req.file.filename}`;
     // }
+
+    req.body.createdBy={
+        account_id: res.locals.user.id,
+    };
     const product = new Product(req.body);
     console.log(req.body)
     await product.save();

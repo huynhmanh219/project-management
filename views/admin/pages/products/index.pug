@@ -5,6 +5,7 @@ include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort.pug
+include ../../mixins/moment.pug
 block main 
     
     if(role.permission.includes("products_view")) 
@@ -35,11 +36,11 @@ block main
             .col-8
              +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
             .col-4
-            if(role.permission.includes("products_create")) 
-             a(
-                href=`${prefixAdmin}/products/create`
-                class="btn btn-outline-success"
-             ) +Thêm mới
+                if(role.permission.includes("products_create")) 
+                    a(
+                    href=`${prefixAdmin}/products/create`
+                    class="btn btn-outline-success"
+                    ) +Thêm mới
 
         table(class=" table table-hover table-sm"
                 checkbox-multi
@@ -54,6 +55,7 @@ block main
                     th Giá
                     th Vị Trí
                     th Trạng Thái
+                    th Người tạo
                     th Hành Động
             tbody 
             each item,index in products 
@@ -79,9 +81,11 @@ block main
                             style="width: 60px"
                             min = "1"
                             name ="position"
-                        )
-                    td
+                        ) 
+                   
                     if(role.permission.includes("products_edit")) 
+                    td
+                   
                         if(item.status == "active") 
                             a(
                             href="javascript:;"
@@ -98,19 +102,22 @@ block main
                             button-change-status
                             class="badge badge-danger"
                             ) Dừng Hoạt Động           
-                        
+                    td 
+                        b #{item.accountfullname}
+                        +formatDatetime(item.createdBy.createAt)
+                    
                     td  
-                    if(role.permission.includes("products_edit")) 
-                        a(href=`${prefixAdmin}/products/edit/${item.id}` 
-                        class="btn btn-warning btn-sm")  Sửa
+                        if(role.permission.includes("products_edit")) 
+                            a(href=`${prefixAdmin}/products/edit/${item.id}` 
+                            class="btn btn-warning btn-sm")  Sửa
                         a(href=`${prefixAdmin}/products/detail/${item.id}`
                             class="btn btn-primary btn-sm ml-1 text-white") Chi tiết
-                    if(role.permission.includes("products_delete")) 
-                        button(
-                            class="btn btn-danger btn-sm ml-1"
-                            button-delete
-                            data-id= item.id
-                        ) Xoá
+                        if(role.permission.includes("products_delete")) 
+                            button(
+                                class="btn btn-danger btn-sm ml-1"
+                                button-delete
+                                data-id= item.id
+                            ) Xoá
 
     +pagingation(pagination)
 

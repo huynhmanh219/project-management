@@ -12,7 +12,8 @@ const session = require("express-session")//import đi kèm để sử dụng pa
 const systemConfig = require('./config/system')
 const database = require("./config/database")
 const methodOverride = require('method-override')//import dùng để ghi đè lên phương thức của form trong html
-const bodyParser = require('body-parser') //import body-parser
+const bodyParser = require('body-parser'); //import body-parser
+const moment = require('moment');
 
 
 database.connet();
@@ -47,7 +48,7 @@ app.use(bodyParser.json())
 
 //App local variables : tao ra 1 bien local su dung cho toan ung dung, chỉ sử dụng cho file .pug mà thôi 
 app.locals.prefixAdmin = systemConfig.prefixAdmin; 
-
+app.locals.moment = moment;
 //Routes
 routerAdmin(app);
 router(app);
