@@ -29,6 +29,7 @@ mixin table-tree(items,level = 1)
                 )
 
             td
+            if(role.permission.includes("product-category_edit"))
                 if(item.status == "active") 
                     a(
                     href="javascript:"
@@ -47,10 +48,13 @@ mixin table-tree(items,level = 1)
                     ) Dừng Hoạt Động           
                 
             td  
+            if(role.permission.includes("product-category_edit"))
                 a(href=`${prefixAdmin}/products-category/edit/${item.id}` 
                 class="btn btn-warning btn-sm")  Sửa
                 a(href=`${prefixAdmin}/products-category/detail/${item.id}`
                     class="btn btn-primary btn-sm ml-1 text-white") Chi tiết
+            
+            if(role.permission.includes("product-category_delete"))
                 button(
                     class="btn btn-danger btn-sm ml-1"
                     button-delete

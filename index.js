@@ -34,6 +34,7 @@ app.use(session({cookie:{maxAge:60000}}));
 app.use(flash());
 //end flash
 
+
 //tiny MCE
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 

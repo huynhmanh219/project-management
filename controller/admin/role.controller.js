@@ -78,7 +78,8 @@ module.exports.permissions = async(req,res)=>{
 
 //[Patch] admin/roles/permissions
 module.exports.permissionsPatch = async(req,res)=>{
-    try{const permissions = JSON.parse(req.body.permissions);
+    try{
+        const permissions = JSON.parse(req.body.permissions);
     for (const item of permissions) {
         await Role.updateMany({_id:item.id},{permission:item.permissions});
     }

@@ -1,7 +1,7 @@
 extends ../../layouts/default.pug
 
 block main
-
+    if(role.permission.includes("roles_create")) 
     h1(class="mb-4") #{pageTitle}
     form(action=`${prefixAdmin}/roles/create`
       method="POST"

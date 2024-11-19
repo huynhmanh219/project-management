@@ -1,14 +1,17 @@
 extends ../../layouts/default.pug
 
 block main 
-    h1(class = "mb-4") Danh Sách Tài Khoản 
+    
 
+    if(role.permission.includes("accounts_view")) 
+    h1(class = "mb-4") Danh Sách Tài Khoản 
     .card.mb-3  
         .card-header Danh Sách 
         .card-body 
             .row   
                 .col-8 
                 .col-4.text-right 
+                if(role.permission.includes("accounts_create")) 
                     a(
                         href=`${prefixAdmin}/accounts/create`
                         class= "btn btn-outline-success"
@@ -36,7 +39,8 @@ block main
                         td #{item.fullname}
                         td #{item.role.title}
                         td #{item.email}
-                        td  
+                        td 
+                        if(role.permission.includes("accounts_edit"))  
                             if item.status == "active"
                                 a(
                                 href="javascript:;"
@@ -54,10 +58,12 @@ block main
                                 class="badge badge-danger"
                                 ) Dừng Hoạt Động       
                         td  
+                        if(role.permission.includes("accounts_edit")) 
                             a(href=`${prefixAdmin}/accounts/edit/${item.id}` 
                             class="btn btn-warning btn-sm")  Sửa
                             a(href=`${prefixAdmin}/accounts/detail/${item.id}`
                                 class="btn btn-primary btn-sm ml-1 text-white") Chi tiết
+                        if(role.permission.includes("accounts_delete")) 
                             button(
                                 class="btn btn-danger btn-sm ml-1"
                                 button-delete

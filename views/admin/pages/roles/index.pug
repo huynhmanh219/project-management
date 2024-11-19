@@ -2,7 +2,7 @@ extends ../../layouts/default.pug
 
 block main 
     
-
+    if(role.permission.includes("roles_view")) 
     h1 Nhóm Quyền
     //-  button-status là thuộc tính tự định nghĩa đặt thế nào cũng được
     .card.mb-3 
@@ -12,6 +12,7 @@ block main
             .col-8
            
             .col-4
+            if(role.permission.includes("roles_create")) 
              a(
                 href=`${prefixAdmin}/roles/create`
                 class="btn btn-outline-success"
@@ -33,10 +34,12 @@ block main
                         td #{item.title}
                         td !{item.description}
                         td  
+                        if(role.permission.includes("roles_edit")) 
                             a(href=`${prefixAdmin}/roles/edit/${item.id}` 
                             class="btn btn-warning btn-sm")  Sửa
                             a(href=`${prefixAdmin}/roles/detail/${item.id}`
                                 class="btn btn-primary btn-sm ml-1 text-white") Chi tiết
+                            if(role.permission.includes("roles_delete")) 
                             button(
                                 class="btn btn-danger btn-sm ml-1"
                                 button-delete
