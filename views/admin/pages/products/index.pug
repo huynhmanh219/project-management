@@ -56,6 +56,7 @@ block main
                     th Vị Trí
                     th Trạng Thái
                     th Người tạo
+                    th Cập Nhật
                     th Hành Động
             tbody 
             each item,index in products 
@@ -105,7 +106,12 @@ block main
                     td 
                         b #{item.accountfullname}
                         +formatDatetime(item.createdBy.createAt)
-                    
+                    td 
+                        - const updatedBy = item.updatedBy.slice(-1)[0];
+                        if(updatedBy)
+                            p #{updatedBy.accountfullname}
+                            p
+                                +formatDatetime(updatedBy.updatedAt)
                     td  
                         if(role.permission.includes("products_edit")) 
                             a(href=`${prefixAdmin}/products/edit/${item.id}` 
