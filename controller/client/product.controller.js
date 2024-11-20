@@ -4,7 +4,6 @@ const Product = require("../../models/product.model");
 module.exports.index = async(req,res)=>{
     
     const product = await Product.find({
-
         deleted:"false"
     }).sort({position:"desc"});
     // console.log(product);
