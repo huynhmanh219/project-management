@@ -16,7 +16,7 @@ module.exports.index= async (req,res)=>{
         status:"active",
     }).sort({position: "desc"}).limit(6)
 
-    const newproduct = productHelper.priceNewproduct(productFeature);
+    const newproduct = productHelper.priceNewproducts(productFeature);
     res.render("client/pages/home/index",{
         pageTitle: "Trang chủ",
         productFeatured:newproduct,

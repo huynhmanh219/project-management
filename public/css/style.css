@@ -188,3 +188,19 @@
         right: auto;
     }
 }
+/* product-detail */
+.product-detail .inner-thump img{
+    width: 100%;
+    height: auto;
+}
+
+.product-detail .inner-title
+{
+    font-size: 32px;
+    height: auto;
+}
+
+.product-detail .inner-category{
+    margin-bottom: 10px;
+    text-decoration-line: line-through;
+}
