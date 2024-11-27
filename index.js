@@ -16,6 +16,7 @@ const bodyParser = require('body-parser'); //import body-parser
 const moment = require('moment');
 
 
+
 database.connet();
 
 app.use(favicon(path.join(__dirname, 'public', 'uploads', 'favicon.ico')));
@@ -49,6 +50,7 @@ app.use(bodyParser.json())
 //App local variables : tao ra 1 bien local su dung cho toan ung dung, chỉ sử dụng cho file .pug mà thôi 
 app.locals.prefixAdmin = systemConfig.prefixAdmin; 
 app.locals.moment = moment;
+
 //Routes
 routerAdmin(app);
 router(app);
