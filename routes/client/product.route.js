@@ -6,7 +6,4 @@ router.get('/',controller.index);
 router.get('/:slugCategory',controller.category);
 router.get("/detail/:slugProduct",controller.detail);
 
-
-router.get('/edit',controller.edit);
-
 module.exports = router

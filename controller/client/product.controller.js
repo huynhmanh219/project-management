@@ -64,7 +64,7 @@ module.exports.detail =  async (req,res)=>{
             });
             product.category = category;
         }
-        console.log(product);
+
         product.priceNew = productHelper.priceNewproduct(product);
        
         res.render("client/pages/products/detail",
@@ -81,7 +81,4 @@ module.exports.detail =  async (req,res)=>{
     
 }
 
-module.exports.edit = (req,res)=>{
-    res.render("client/pages/products/index")
-}
 
