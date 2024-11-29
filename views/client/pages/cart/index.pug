@@ -43,6 +43,8 @@ block main
                                     td 
                                         p #{item.totalPrice}$
                                     td 
+                                        a(href=`/cart/delete/${item.product_id}`
+                                        class="btn btn-danger text-center") Xoá 
                         else 
                             p Không  có sản phẩm trong giỏ hàng
                 h3(class="text-right") Tổng tiền: #{cartDetail.totalPrice}$
