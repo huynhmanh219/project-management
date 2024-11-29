@@ -1,3 +1,4 @@
+include moment.pug
 mixin table-tree(items,level = 1)
     each item, index in items 
         - const prefix = Array(level + 1).join("-- ")
@@ -45,7 +46,15 @@ mixin table-tree(items,level = 1)
                     button-change-status
                     class="badge badge-danger"
                     ) Dừng Hoạt Động           
-                
+            td 
+                b #{item.accountfullname}
+                +formatDatetime(item.createdBy.createAt)
+            td 
+                - const updatedBy = item.updatedBy.slice(-1)[0];
+                if(updatedBy)
+                    p #{updatedBy.accountfullname}
+                    p
+                    +formatDatetime(updatedBy.updatedAt)  
             td  
                 if(role.permission.includes("products-category_edit"))
                     a(href=`${prefixAdmin}/products-category/edit/${item.id}` 

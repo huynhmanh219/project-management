@@ -26,7 +26,6 @@ module.exports.index = async (req,res) =>{
 
 //[GET] admin/accounts/create
 module.exports.create = async (req,res) =>{
-
     
     const roles = await Role.find({deleted:false});
     res.render(`admin/pages/accounts/create`,{
@@ -48,6 +47,11 @@ module.exports.createPost = async (req,res) =>{
         res.redirect("back");
     }
     else{
+        
+        req.body.createdBy = {
+            account_id:res.locals.user.id
+        }
+        
         req.body.password = md5(req.body.password); 
         const record = new Account(req.body);
         await record.save();

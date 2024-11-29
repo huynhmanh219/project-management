@@ -65,6 +65,7 @@
         display: none;
     }
 }
+
 [show-alert] [close-alert]{
 background: #ffffffc4;
 display: inline-block;

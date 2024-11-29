@@ -69,6 +69,7 @@ module.exports.index = async (req,res)=>{
         
         //lấy ra thông tin người cập nhật gần nhất
         const updatedBy = product.updatedBy.slice(-1)[0];
+        console.log(updatedBy);
         
         if(updatedBy){
         const updatedby = await Account.findOne({

@@ -5,6 +5,7 @@ const filterStatusHelper = require("../../helper/filterStatus");
 const searchHelper = require("../../helper/search");
 const validate = require("../../validates/admin/product.validate");
 const createTreeHelper = require("../../helper/createTree");
+const Account = require("../../models/account.model");
 
 //[get] admin/proucts-category
 module.exports.index = async (req, res) => {
@@ -24,7 +25,8 @@ module.exports.index = async (req, res) => {
         find.title = objSearch.regex
     }
     //end tính năng
-     //sort
+    
+    //sort
      const sort ={};
      if(req.query.sortKey && req.query.sortValue)
      {
@@ -34,11 +36,34 @@ module.exports.index = async (req, res) => {
          sort.position = "desc";
      }
      //end sort
+    
     const record = await ProductCategory.find(find).sort(sort);
-    const newRecord = createTreeHelper.tree(record);
+     const newRecords = createTreeHelper.tree(record);
+    //lấy thông tên người tạo
+    for(const item of record)
+    {
+        const user = await Account.findOne({
+            _id: item.createdBy.account_id
+        })
+        if(user)
+        {
+            item.accountfullname = user.fullname
+        } 
+        // lấy thông tin người update gần nhất
+        const updated = item.updatedBy.slice(-1)[0];
+        if(updated)
+        {
+            const updatedbyUser = await Account.findOne({
+                _id: updated.account_id
+            })
+           updated.accountfullname = updatedbyUser.fullname;
+        }
+    }
+   
+   
     res.render("admin/pages/products-category/index", {
         pageTitle: "Danh Mục Sản Phẩm",
-        records: newRecord,
+        records: newRecords,
         filterStatus:filterStatus,
         keyword:objSearch.keyword
     })
@@ -46,11 +71,19 @@ module.exports.index = async (req, res) => {
 
 //[PATCH]/admin/products-category/change-status/:status/:id
 module.exports.changeStatus = async (req,res)=>{
-    console.log(req.params) //req.params là những gì sau dấu ?
+     //req.params là những gì sau dấu ?
     const status = req.params.status;
     const id = req.params.id;
-
-    await ProductCategory.updateOne({_id:id},{status:status});
+    
+    const updated = {
+        account_id:res.locals.user.id,
+        updatedAt: new Date()
+    }
+    await ProductCategory.updateOne({_id:id},
+    {
+       status:status,
+       $push:({updatedBy:updated})
+    });
 
     req.flash('success','Cập nhật trạng thái thành công!')
     res.redirect("back")
@@ -62,17 +95,22 @@ module.exports.changeMulti = async (req,res)=>{
     //phải cài đặt thư viện body parser , gói này sẽ convert lại body mới lấy được thuộc tính trong req.body
    const type = req.body.type;
    const ids = req.body.ids.split(", ");
-    console.log(type);
-    
+   
+    const updated = {
+        account_id:res.locals.user.id,
+        updatedAt: new Date()
+    }
 
    switch (type) {
     case "active":
-        await ProductCategory.updateMany({_id:{$in:ids}},{status:"active"});
+        await ProductCategory.updateMany({_id:{$in:ids}},{status:"active",
+            $push:({updatedBy:updated})
+        });
         req.flash('success',`cập nhật trạng thái thành công ${ids.length} sản phẩm`);
         break;
 
     case "inactive":
-        await ProductCategory.updateMany({_id:{$in:ids}},{status:"inactive"});
+        await ProductCategory.updateMany({_id:{$in:ids}},{status:"inactive", $push:({updatedBy:updated})});
         req.flash('success',`cập nhật trạng thái thành công ${ids.length} sản phẩm`);
         break;
 
@@ -87,7 +125,7 @@ module.exports.changeMulti = async (req,res)=>{
         for (const item of ids) {
             let [id,pos] = item.split("-");
             pos = parseInt(pos);
-            await ProductCategory.updateOne({_id: id},{position:pos})
+            await ProductCategory.updateOne({_id: id},{position:pos, $push:({updatedBy:updated})    })
         }
         req.flash('success',`đổi vị trí ${ids.length} sản phẩm thành công`);
         break;
@@ -137,7 +175,10 @@ module.exports.createPost = async (req, res) => {
     //     return
     // }
     
-    
+    req.body.createdBy ={
+        account_id:res.locals.user.id,
+    }
+
     if (req.body.position == "") {
         const countPosition = await ProductCategory.countDocuments();
         req.body.position = countPosition + 1;
@@ -182,8 +223,18 @@ module.exports.editPatch = async (req, res) => {
        
         const id = req.params.id;
         req.body.position = parseInt(req.body.position);
-        await ProductCategory.updateOne({_id: id}, req.body);
+        const updated = {
+            account_id: res.locals.user.id,
+            updatedAt: new Date()
+        }
+        await ProductCategory.updateOne({_id: id}, 
+            {
+            ...req.body,
+            $push:({updatedBy:updated})
+        });
+
         req.flash("success","cập nhật danh mục thành công");
+        
     } 
     catch (error)
      {

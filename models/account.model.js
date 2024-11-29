@@ -17,7 +17,23 @@ const accountSchema = new mongoose.Schema({
     avatar:String,
     role_id:String,
     status:String,
-    deletedAt:Date
+    deletedAt:Date,
+    createdBy:{
+        account_id:String,
+        createdAt:{
+            type:Date,
+            default:Date.now
+        }
+    },
+    updatedBy:[{
+        account_id:String,
+        updatedAt:Date
+    }],
+    deletedBy:{
+        account_id:String,
+        updatedAt:Date
+    },
+
 },
 {
     timestamp:true

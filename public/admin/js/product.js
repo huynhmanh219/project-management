@@ -14,7 +14,6 @@ if( buttonChangeStatus.length>0 )
             const action = pathStatus + `/${statusChange}/${id}?_method=PATCH`;
             formChangeStatus.action = action
             formChangeStatus.submit();
-            fri
         })
     })
 }
