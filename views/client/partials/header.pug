@@ -33,7 +33,9 @@ header.header
               a(href="/products") Sản phẩm
               -const pathProduct = "/products";
                 +sub-menu(layoutProductCategory,pathProduct)
-              
+            li
+              a(href="/cart") Giỏ hàng(#{miniCart ? miniCart.totalQuantity: 0}) 
+              //-Check cho các tình huống chưa có cartId từ lúc đăng nhập vào trang web lần đầu tiên 
               
               
               
