@@ -13,10 +13,11 @@ const orderSchema = new mongoose.Schema(
        {
         product_id:String,
         price:Number,
-        discountPercent:Number,
+        discountPercentage:Number,
         quantity:Number
-    }
+        }
     ],
+    status:String,
     deleted:{
         type:Boolean,
         default:false
