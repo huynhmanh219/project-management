@@ -9,7 +9,7 @@ const roleSchema = new mongoose.Schema(
         default:[]
     },
     deleted:{
-        type:String,
+        type:Boolean,
         default:false
     },
     deletedAt:Date,
