@@ -9,7 +9,7 @@ module.exports.index = async (req,res)=>{
     const cart = await Cart.findOne({
         _id:cartId
     })
-   if(cart.products.length>0)
+   if(cart.products.length > 0)
    {
     for (const item of cart.products) {
         const productId = item.product_id;
@@ -41,7 +41,7 @@ module.exports.order = async (req,res)=>{
 
     for (const product of cart.products) {
         const objectProduct = {
-            product_id: product.id,
+            product_id: product.product_id,
             price:0,
             discountPercentage: 0,
             quantity:product.quantity
@@ -59,7 +59,7 @@ module.exports.order = async (req,res)=>{
     const orderInfo = {
         cart_id:cartId,
         userInfo:userInfo, 
-        product:products
+        products:products
     }
     const order =new Order(orderInfo);
     await order.save();
@@ -73,9 +73,27 @@ module.exports.order = async (req,res)=>{
 
 //[GET]/checkout/success/:orderId
 module.exports.success= async(req,res)=>{
-    const orderId= req.params.orderId;
+    const orderId = req.params.orderId;
+    const order = await Order.findOne({_id:orderId});
 
+    for (const product of order.products) {
+        const productInfo = await Product.findOne({
+            _id:product.product_id
+        }).select("title thumbnail");
+        
+        product.productInfo = productInfo;
+        product.priceNew = productHelper.priceNewproduct(product);
+        product.totalPrice = product.priceNew * product.quantity;
+
+        console.log(productInfo);
+        
+    }
+    
+    const test = await Product.findOne({_id:"6750a547247656602e41e3b4"});
+    console.log(test);
+    order.totalPrice = order.products.reduce((sum,product)=>sum + product.totalPrice,0);
     res.render("client/pages/checkout/success",{
-        pageTitle:"Đặt hàng thành công"
+        pageTitle:"Đặt hàng thành công",
+        order:order
     })
 }
