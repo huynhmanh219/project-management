@@ -3,7 +3,7 @@ const generate = require('../helper/generate');
 
 const accountSchema = new mongoose.Schema({
     deleted:{
-        type:String,
+        type:Boolean,
         default:false
     },
     fullname: String,
