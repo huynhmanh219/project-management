@@ -20,11 +20,9 @@ const userSchema = new mongoose.Schema({
         default: "active",
     },
     deletedAt:Date,
-
-
 },
 {
-    timestamp:true
+    timestamps:true
 })
 
 const User = mongoose.model("User",userSchema,"users");

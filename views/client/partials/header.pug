@@ -3,11 +3,11 @@ include ../mixins/sub-menu.pug
 header.header
   .container
     .row.align-items-center
-      .col-3
+      .col-2
         .inner-logo
           a(href="/")
             img(src="/images/hm.jpg", alt="logo", class="logo")
-      .col-5 
+      .col-3 
         form(
           action= "/search"
           method="GET"
@@ -24,7 +24,7 @@ header.header
               class="btn btn-primary"
               type="submit"
             ) Tìm 
-      .col-4
+      .col-7
         .inner-menu
           ul
             li
@@ -36,16 +36,12 @@ header.header
             li
               a(href="/cart") Giỏ hàng(#{miniCart ? miniCart.totalQuantity: 0}) 
               //-Check cho các tình huống chưa có cartId từ lúc đăng nhập vào trang web lần đầu tiên 
-              
-              
-              
-              
-              
-              
-              
-              
-              
-              
+            li
+              a(href="/user/register") Đăng Ký 
+            li
+              a(href="/user/login") Đăng Nhập 
+
+   
               
               //- ul
               //-   li
