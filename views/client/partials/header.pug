@@ -36,13 +36,16 @@ header.header
             li
               a(href="/cart") Giỏ hàng(#{miniCart ? miniCart.totalQuantity: 0}) 
               //-Check cho các tình huống chưa có cartId từ lúc đăng nhập vào trang web lần đầu tiên 
-            li
-              a(href="/user/register") Đăng Ký 
-            li
-              a(href="/user/login") Đăng Nhập 
-
+            if(!user)
+              li
+                a(href="/user/register") Đăng Ký 
+              li
+                a(href="/user/login") Đăng Nhập 
+            else 
+              li
+                a(href="/user/logout") Đăng Xuất
    
-              
+    
               //- ul
               //-   li
               //-     a(href="/products/slug-1") Mục 1
