@@ -7,8 +7,8 @@ block main
     .container.my-5
         .row.justify-content-center
             .col-8
-                h1(class="text-center" ) Đăng Nhập 
-                form(action=`/user/login`,
+                h1(class="text-center" ) Nhập Mã OTP xác thực
+                form(action=`/user/password/otp`,
                 method="post")
                     div(class="form-group")
                         label(for="email") Email 
@@ -19,15 +19,14 @@ block main
                         required
                         )
                     div(class="form-group")
-                        label(for="password") Mật Khẩu
-                        input(type="password"
+                        label(for="otp") Mã OTP
+                        input(type="text"
                         class= "form-control"
-                        id="password"
-                        name= "password"
+                        id="otp"
+                        name= "otp"
                         required
                         )
                     div(class="form-group")
                         button(class= "btn btn-primary btn-block"
                         type="submit"
-                        ) Đăng Nhập
-                a(href="/user/password/forgot") Quên Mật Khẩu?
+                        ) Xác Nhận
