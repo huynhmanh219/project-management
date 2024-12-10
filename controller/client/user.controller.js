@@ -3,6 +3,7 @@ const md5 =require("md5");
 const generateHelper = require('../../helper/generate');
 const ForgotPassword = require('../../models/forgot-password.model');
 const sendMailHelper = require('../../helper/sendmail');
+const Cart = require("../../models/cart.model");
 
 //[get]/user/register
 module.exports.register = async(req,res)=>{
@@ -67,6 +68,9 @@ module.exports.loginPost = async(req,res)=>{
         return
     }
     res.cookie("tokenUser",user.tokenUser);
+    await Cart.updateOne({_id:req.cookies.cartId},{
+        user_id:user.id
+    })
     res.redirect("/");
 }
 
@@ -74,6 +78,7 @@ module.exports.loginPost = async(req,res)=>{
 module.exports.logout = async(req,res)=>{
 
     res.clearCookie("tokenUser");
+    
     res.redirect("/");
 }
 
