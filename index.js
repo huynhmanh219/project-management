@@ -54,7 +54,11 @@ app.locals.moment = moment;
 //Routes
 routerAdmin(app);
 router(app);
-
+app.get("*",(req,res)=>{
+    res.render("client/pages/error/404",{
+        pageTitle:"404 Not fount"
+    })
+})
 
 app.listen(port,()=>{
     console.log(`Da chay server voi cong ${port}`);
