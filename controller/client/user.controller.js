@@ -40,7 +40,7 @@ module.exports.login = async(req,res)=>{
             pageTitle:"Đăng nhập tài khoản"
         }
     );
-}
+};
 
 //[post]/user/login
 module.exports.loginPost = async(req,res)=>{
@@ -72,7 +72,7 @@ module.exports.loginPost = async(req,res)=>{
     });
     if(cart)
     {
-        res.cookies("cartId",cart.id)
+        res.cookie("cartId",cart.id)
     }
     else
     {

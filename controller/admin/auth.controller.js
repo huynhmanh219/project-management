@@ -6,7 +6,8 @@ const systemConfig = require("../../config/system");
 
 //[GET] /admin/auth/login
 module.exports.login = async (req,res) => {
-    const user = await Account.findOne({token:req.cookies.token});
+    const user = await Account.findOne();
+ 
     if(req.cookies.token)
     {
         res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
@@ -22,30 +23,33 @@ module.exports.login = async (req,res) => {
 
 //[POST] /admin/auth/login
 module.exports.loginPOST = async (req,res) => {
-    const {email,password} = req.body;
-
-    const user = await Account.findOne({
+    const email = req.body.email;
+    const password = req.body.password;
+    console.log(req.body);
+    const account = await Account.findOne({
         email:email,
         deleted:false
     });
-    if(!user){
+    console.log(account);
+    if(!account){
         req.flash("error","Email này không tồn tại");
         res.redirect("back");
         return ;
     }
-    if(md5(password) != user.password)
+    if(md5(password) != account.password)
     {
         req.flash("error","Sai mật khẩu");
         res.redirect("back");
         return;
     }
-    if(user.status != "active")
+    if(account.status != "active")
     {
         req.flash("error","Tài khoản đang bị khoá");
         res.redirect("back");
         return;
     }
-    res.cookie("token",user.token);
+    
+    res.cookie("token",account.token);
     res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
 
 }
