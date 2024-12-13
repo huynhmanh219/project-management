@@ -241,3 +241,131 @@
 }
 
 /*end show alert */
+/* chat */
+/* General Chat Container */
+.chat {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fefefe;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat Body Styling */
+.chat .inner-body {
+    padding: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+    background: #fafafa;
+}
+
+.chat .inner-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat .inner-body::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 4px;
+}
+
+.chat .inner-body::-webkit-scrollbar-track {
+    background: #eee;
+}
+
+/* Chat Message Styling */
+.chat .inner-outgoing,
+.chat .inner-incoming {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.chat .inner-outgoing {
+    align-items: flex-end;
+}
+
+.chat .inner-incoming {
+    align-items: flex-start;
+}
+
+.chat .inner-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #444;
+}
+
+.chat .inner-content {
+    max-width: 75%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chat .inner-outgoing .inner-content {
+    background: #007bff;
+    color: #fff;
+    text-align: right;
+}
+
+.chat .inner-incoming .inner-content {
+    background: #eaeaea;
+    color: #333;
+    text-align: left;
+}
+
+/* Footer and Input Styling */
+.chat .inner-foot {
+    border-top: 1px solid #ddd;
+    padding: 10px 15px;
+    background: #f9f9f9;
+}
+
+.chat .inner-form {
+    display: flex;
+    align-items: center;
+}
+
+.chat .inner-form input {
+    flex: 1;
+    height: 36px;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    padding: 0 12px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.chat .inner-form input:focus {
+    border-color: #007bff;
+}
+
+.chat .inner-form button {
+    margin-left: 10px;
+    border-radius: 18px;
+    border: none;
+    background: #007bff;
+    color: #fff;
+    height: 36px;
+    padding: 0 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.chat .inner-form button:hover {
+    background: #0056b3;
+}
+
+.chat .inner-form button i {
+    font-size: 16px;
+}
+
+/* end chat  */
