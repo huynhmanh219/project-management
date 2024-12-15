@@ -9,24 +9,28 @@ block main
         .row
             .col-12 
                 .chat 
+                    //- .div #{chat}
                     .inner-body
-                        .inner-name A
-                        .inner-content aaaaaa
-                    .inner-outgoing 
-                        .inner-content bbbbb
-                    .inner-incoming 
-                        .inner-name A
-                        .inner-content aaaaaa
-                    
-                    .inner-foot
-                        form(
-                            class="inner-form"
-                            action= ""
-                        )
-                            input(
-                                type="text"
-                                name="content"
-                                placeholder="nhập nội dung..."
+                        each chat in chats
+                            div(class=(chat.user_id == user.id ? "inner-outgoing" : "inner-incoming"))
+                                if(chat.user_id != user.id)
+                                    .inner-name #{chat.infoUser.fullname}
+                                .inner-content #{chat.content}
+                        //- .inner-outgoing 
+                        //-     .inner-content bbbbb
+                        //- .inner-incoming 
+                        //-     .inner-name A
+                        //-     .inner-content aaaaaa
+                        
+                        .inner-foot
+                            form(
+                                class="inner-form"
+                                action= ""
                             )
-                            button
-                                i.fa-solid.fa-paper-plane
+                                input(
+                                    type="text"
+                                    name="content"
+                                    placeholder="nhập nội dung..."
+                                )
+                                button
+                                    i.fa-solid.fa-paper-plane
