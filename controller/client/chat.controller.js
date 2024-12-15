@@ -3,6 +3,7 @@ const User = require("../../models/user.model");
 //[GET] /chat
 module.exports.index = async (req,res)=>{
     const userId = res.locals.user.id;    
+    const fullname = res.locals.user.fullname;
     //socket
     _io.once("connection",(socket)=>{ // io.once chỉ load duy nhât một lần khác với io.on mỗi lần load trang là 1 làn load connection
         socket.on("CLIENT_SEND_MESSAGE",async (content)=>{
@@ -12,7 +13,14 @@ module.exports.index = async (req,res)=>{
                 content:content
             });
             await chat.save();
+            //trả về data cho client
+            _io.emit("SERVER_RETURN_MESSAGE",{
+                userId:userId,
+                fullname:fullname,
+                content: content
+            })
         })
+        
     })
     //end socket
     //lấy data từ db 
