@@ -14,6 +14,8 @@ const database = require("./config/database")
 const methodOverride = require('method-override')//import dùng để ghi đè lên phương thức của form trong html
 const bodyParser = require('body-parser'); //import body-parser
 const moment = require('moment');
+const http = require("http");
+const {Server} = require("socket.io");
 
 
 
@@ -22,9 +24,19 @@ database.connet();
 app.use(favicon(path.join(__dirname, 'public', 'uploads', 'favicon.ico')));
 
 app.set("view engine","pug");
+//nên sẽ cần __dirname 
 app.set("views",`${__dirname}/views`)
 app.use(express.static(`${__dirname}/public`))// biến public này chỉ được hiểu trên local nhưng trên online thì sẽ không hiểu thư mục này
-//nên sẽ cần __dirname 
+
+
+
+//socketio 
+const server = http.createServer(app);
+const io = new Server(server);
+io.on("connection",(socket)=>{
+    console.log("a user connect",socket.id);  
+})
+//end socketio
 
 
 //methodOverride
@@ -60,6 +72,6 @@ app.get("*",(req,res)=>{
     })
 })
 
-app.listen(port,()=>{
+server.listen(port,()=>{
     console.log(`Da chay server voi cong ${port}`);
 })
