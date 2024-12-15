@@ -33,9 +33,7 @@ app.use(express.static(`${__dirname}/public`))// biến public này chỉ đư�
 //socketio 
 const server = http.createServer(app);
 const io = new Server(server);
-io.on("connection",(socket)=>{
-    console.log("a user connect",socket.id);  
-})
+global._io = io;
 //end socketio
 
 
