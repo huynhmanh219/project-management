@@ -28,7 +28,7 @@ app.set("view engine","pug");
 app.set("views",`${__dirname}/views`)
 app.use(express.static(`${__dirname}/public`))// biến public này chỉ được hiểu trên local nhưng trên online thì sẽ không hiểu thư mục này
 
-
+app.use(express.json());
 
 //socketio 
 const server = http.createServer(app);
