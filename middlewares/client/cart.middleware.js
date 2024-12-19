@@ -6,7 +6,7 @@ module.exports.cartId = async (req,res,next)=>{
         const cart = new Cart();
         await cart.save();
         const expiresCookies = 360 * 24 *60 *60 *1000;
-        console.log(cart);
+     
         // có thể lưu ip của khách hàng bằng javascript
 
 

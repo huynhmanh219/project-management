@@ -18,8 +18,18 @@ module.exports.index = async (req,res)=>{
                 userId:userId,
                 fullname:fullname,
                 content: content
-            })
-        })
+            });
+        
+        }) ;
+        socket.on("CLIENT_SEND_TYPING",async(type)=>{
+                socket.broadcast.emit("SERVER_RETURN_TYPING",{
+                    userId:userId,
+                    fullname:fullname,
+                    type:type
+                })
+      
+            });
+      
         
     })
     //end socket

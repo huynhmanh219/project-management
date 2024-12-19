@@ -380,3 +380,66 @@
     opacity: 1;
 }
 /*end emoji icon*/
+ 
+/*box-typing*/
+
+.inner-list-typing {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.box-typing {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f3f3f3;
+    border: 1px solid #ddd;
+    max-width: 60%;
+}
+
+.box-typing .inner-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.box-typing .inner-dots {
+    display: flex;
+    gap: 3px;
+}
+
+.box-typing .inner-dots span {
+    width: 8px;
+    height: 8px;
+    background-color: #aaa;
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+}
+
+/* Hiệu ứng nhấp nháy cho từng dấu chấm */
+.box-typing .inner-dots span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.box-typing .inner-dots span:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.box-typing .inner-dots span:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* Keyframes cho hiệu ứng nhấp nháy */
+@keyframes blink {
+    0%, 100% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+/*end box-typing*/
